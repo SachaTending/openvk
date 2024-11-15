@@ -24,6 +24,8 @@ jobs:
       - name: Set up Docker Buildx
         id: buildx
         uses: docker/setup-buildx-action@v3
+        with:
+          platforms: linux/${{matrix.platform}}
 
       - name: Change repository string to lowercase
         id: repositorystring
@@ -77,6 +79,8 @@ jobs:
       - name: Set up Docker Buildx
         id: buildx
         uses: docker/setup-buildx-action@v3
+        with:
+          platforms: linux/${{matrix.platform}}
 
       - name: Change repository string to lowercase
         id: repositorystring
@@ -130,7 +134,6 @@ jobs:
           file: install/automated/docker/mariadb-primary.Dockerfile
           tags: ${{ steps.db-primarymeta.outputs.tags }}
           labels: ${{ steps.db-primarymeta.outputs.labels }}
-          provenance: false # workaround, see https://github.com/orgs/community/discussions/45969
           build-args: |
             VERSION=${{env.DB_VERSION}}
       
@@ -142,6 +145,5 @@ jobs:
           file: install/automated/docker/mariadb-eventdb.Dockerfile
           tags: ${{ steps.db-eventmeta.outputs.tags }}
           labels: ${{ steps.db-eventmeta.outputs.labels }}
-          provenance: false # workaround, see https://github.com/orgs/community/discussions/45969
           build-args: |
             VERSION=${{env.DB_VERSION}}
